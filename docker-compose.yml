@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  mssql-server:
+     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+     environment:
+         ACCEPT_EULA: "Y"
+         SA_PASSWORD: "Senol61gunes."
+         MSSQL_PID: Express
+     ports:
+         - "1433:1433"
+  careertestcase:
+    image: ${DOCKER_REGISTRY-}careertestcase
+    build:
+        context: .
+        dockerfile: CareerTestCase/Dockerfile
+    environment:
+       DbServer: "mssql-server"
+       DbPort: "1433"
+       DbUser: "SA"
+       Password: "Senol61gunes."
+       Database: "CareerDb"
+
